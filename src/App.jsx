@@ -11,7 +11,7 @@ import {
 import { Navbar } from './components/Navbar'
 import 'react-toastify/dist/ReactToastify.css'
 import { useState } from 'react'
-import ProtectedRoute from './utils/protectedRoute'
+import ProtectedRoute from './utils/ProtectedRoute'
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [language, setLanguage] = useState('en') // 'en' for English, 'id' for Indonesian
