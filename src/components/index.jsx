@@ -1,0 +1,6 @@
+export * from './Register'
+export * from './Login'
+export * from './GetUserLogged'
+export * from './GetNotes'
+export * from './GetDetailNotes'
+export * from './GetArchivedNotes'
