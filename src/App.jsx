@@ -1,4 +1,6 @@
+// src/App.js
 import { Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
 import {
   Register,
@@ -10,20 +12,22 @@ import {
 } from './components'
 import { Navbar } from './components/Navbar'
 import 'react-toastify/dist/ReactToastify.css'
+import { useTheme } from './context/ThemeContext'
 import { useState } from 'react'
 import ProtectedRoute from './utils/ProtectedRoute'
+import { useLanguage } from './context/languageContext'
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const [language, setLanguage] = useState('en') // 'en' for English, 'id' for Indonesian
-  const [isAuthenticated, setIsAuthenticated] = useState(false) // State untuk autentikasi
+  const { isDarkMode, toggleDarkMode } = useTheme() // Ambil dari context
+  const { language, toggleLanguage } = useLanguage() // Ambil dari context
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    // Ambil status autentikasi dari localStorage
+    return !!localStorage.getItem('access_token') // Konversi ke boolean
+  })
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode)
-  }
-
-  const toggleLanguage = () => {
-    setLanguage((prevLang) => (prevLang === 'en' ? 'id' : 'en'))
-  }
+  // Simpan tema ke localStorage saat berubah
+  useEffect(() => {
+    localStorage.setItem('isDarkMode', isDarkMode)
+  }, [isDarkMode])
 
   return (
     <div
@@ -41,7 +45,13 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<Register isDarkMode={isDarkMode} language={language} />}
+            element={
+              <Login
+                isDarkMode={isDarkMode}
+                language={language}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
           />
           <Route
             path="register"

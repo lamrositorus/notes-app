@@ -1,13 +1,17 @@
+// src/utils/ProtectedRoute.js
 import { Navigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const ProtectedRoute = ({ children, isAuthenticated }) => {
-  return isAuthenticated ? children : <Navigate to="/login" replace />
+const ProtectedRoute = ({ isAuthenticated, children }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+  return children
 }
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 export default ProtectedRoute

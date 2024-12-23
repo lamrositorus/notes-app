@@ -1,3 +1,4 @@
+// src/components/Login.js
 import { useState } from 'react'
 import { API_Source } from '../data/API-Source'
 import { useNavigate, Link } from 'react-router-dom'
@@ -29,16 +30,16 @@ export const Login = ({ isDarkMode, language, setIsAuthenticated }) => {
 
     try {
       const result = await API_Source.login(email, password)
+      console.log(result)
       if (result.status === 'success') {
+        // Simpan token dan status autentikasi di localStorage
+        localStorage.setItem('access_token', result.data.accessToken)
+        setIsAuthenticated(true) // Set status autentikasi ke true
         setSuccess(language === 'en' ? 'Login successful!' : 'Login berhasil!')
-        setIsAuthenticated(true)
         navigate('/notes')
-        toast.success(
-          language === 'en' ? 'Login successful!' : 'Login berhasil!',
-        )
+        toast.success(result.message)
       } else {
-        result.message ||
-          (language === 'en' ? 'Registration failed.' : 'Pendaftaran gagal.')
+        toast.error(result.message)
       }
     } catch {
       toast.error(

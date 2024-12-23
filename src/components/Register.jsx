@@ -45,26 +45,12 @@ export const Register = ({ isDarkMode, language }) => {
 
     try {
       const result = await API_Source.register(name, email, password)
-      if (result.success) {
-        setSuccess(
-          language === 'en'
-            ? 'Registration successful!'
-            : 'Pendaftaran berhasil!',
-        )
-        navigate('/login') // Redirect to login page
-        toast.success(
-          language === 'en'
-            ? 'Registration successful!'
-            : 'Pendaftaran berhasil!',
-        )
-      } else {
-        toast.error(
-          result.message ||
-            (language === 'en' ? 'Registration failed.' : 'Pendaftaran gagal.'),
-        )
-      }
+      console.log(' hasil: ', result)
+      setSuccess(result.message)
+      navigate('/login')
+      toast.success('Registration successful!')
     } catch {
-      setError(
+      toast.error(
         language === 'en'
           ? 'An error occurred. Please try again.'
           : 'Terjadi kesalahan. Silakan coba lagi.',

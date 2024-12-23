@@ -14,7 +14,9 @@ export const Navbar = ({
 
   const handleLogout = () => {
     setIsLoading(true)
-    localStorage.removeItem('access_token') // Remove accessToken from localStorage
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('isDarkMode')
+    localStorage.removeItem('language')
 
     // Simulate a loading delay
     setTimeout(() => {
